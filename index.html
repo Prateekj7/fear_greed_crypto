@@ -1,0 +1,95 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+        <style>
+            a:link, a:visited {
+            color: white;
+            padding: 14px 25px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+          }
+        </style>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    </head>
+
+    <body>
+        <div style="padding-left: 10%;"><p style="font-size: xx-large;">The Fear and Greed Index : Bitcoin</p></div>
+        <span class="div1" style="padding-left: 20%; padding-top: 20%;">
+            <button type="button" class="btn btn-primary" style="width: 100px; height: 70px;">
+                <a href="https://alternative.me/crypto/fear-and-greed-index.png" alt="Latest Crypto Fear & Greed Index">
+                    IMG
+                </a>
+            </button>
+            <button id="butn1" type="button" class="btn btn-primary" style="display: inline;width: 100px; height: 70px" onclick="fullInfo()">
+                Full info
+            </button>
+        </span>
+        
+        <div style="padding-left: 20%;">
+            <div id="b1" style="padding-bottom: 5%; padding-top: 10%; ">
+                <section id="sec">
+                    The Value right now is : <span id="head1" style="font-weight: bold; height: 50px;"></span>
+                </section>
+            </div>
+            <div id="b2">
+                <section id="sec2">
+                    The Classification right now is : <span id="head2" style="font-weight: bold;"></span>
+                </section>
+            </div>
+        </div>
+
+    <script type="text/javascript">
+        // function fullInfo(){
+        //     var urlapi = 'https://api.alternative.me/fng/';
+        //     fetch(urlapi).then(response => {
+        //         return response.json();
+        //     }).then(data => {
+        //         //console.log(data.data);
+        //         var arr1 = data.data;
+        //         populate(arr1);
+        //     }).catch(err =>{
+        //         console.log("Error");
+        //     })
+        // }
+
+        document.getElementById("butn1").addEventListener("click", myFunction);
+
+            function myFunction() {
+                document.getElementById('butn1').disabled = true;
+        }
+
+        async function fullInfo(){
+            const response = await fetch('https://api.alternative.me/fng/?limit=1&format=json&date_format=world');
+            if(response.ok){
+                const obj = await response.json();
+                populate(obj.data);
+            }
+            else{
+                console.log("some error");
+            }
+        }
+        function populate(obj){
+
+            var resArr = obj.map(function(x){
+                return x[Object.keys(x)[0]];
+            });
+            //const head1 = document.createElement('h3');
+            //head1.textContent=resArr;
+            //sec.appendChild(head1);
+            document.querySelector("#head1").textContent = resArr;
+
+            var resArr1 = obj.map(function(x){
+                return x[Object.keys(x)[1]];
+            });
+            // const head2 = document.createElement('h3');
+            // head2.textContent=resArr1;
+            // sec2.appendChild(head2);
+            document.querySelector("#head2").textContent = resArr1;
+        }
+    </script>
+        
+    </body>
+</html>
